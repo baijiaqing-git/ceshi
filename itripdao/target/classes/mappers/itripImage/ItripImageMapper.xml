@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripImage.ItripImageMapper">
+    <insert id="insertItripImage">
+        insert into itrip_image(
+            type,
+            targetId,
+            position,
+            imgUrl,
+            creationDate,
+            createdBy,
+            modifyDate,
+            modifiedBy)
+        values(
+                  #{type},
+                  #{targetId},
+                  #{position},
+                  #{imgUrl},
+                  #{creationDate},
+                  #{createdBy},
+                  #{modifyDate},
+                  #{modifiedBy})
+    </insert>
+    <delete id="delpic">
+        delete
+        from itrip_image
+        where imgUrl = #{imgName}
+    </delete>
+
+
+    <select id="getImg" resultType="cn.kgc.itrip.beans.vo.ItripImgVo">
+        select imgUrl,position FROM itrip_image where type=0
+            and targetId=#{targetId}
+    </select>
+    <select id="getRoomImg" resultType="cn.kgc.itrip.beans.vo.ItripImgVo">
+        select imgUrl, position
+        FROM itrip_image
+        WHERE type = 1
+          and targetId = #{targetId}
+    </select>
+    <select id="getCommentImg" resultType="cn.kgc.itrip.beans.vo.ItripImgVo">
+        select imgUrl, position
+        FROM itrip_image
+        WHERE type = 2
+          and targetId = #{targetId}
+    </select>
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripComment.ItripCommentMapper">
+    <insert id="add">
+        insert into itrip_comment
+        (userId,
+         content,
+         facilitiesScore,
+         hotelId,
+         hygieneScore,
+         isHavingImg,
+         isOk,
+         orderId,
+         positionScore,
+         productId,
+         productType,
+         serviceScore,
+         tripMode,
+         creationDate)
+        VALUES (#{userId},
+                #{itripAddCommentVO.content},
+                #{itripAddCommentVO.facilitiesScore},
+                #{itripAddCommentVO.hotelId},
+                #{itripAddCommentVO.hygieneScore},
+                #{itripAddCommentVO.isHavingImg},
+                #{itripAddCommentVO.isOk},
+                #{itripAddCommentVO.orderId},
+                #{itripAddCommentVO.positionScore},
+                #{itripAddCommentVO.productId},
+                #{itripAddCommentVO.productType},
+                #{itripAddCommentVO.serviceScore},
+                #{itripAddCommentVO.tripMode},
+                NOW())
+    </insert>
+    <insert id="insertItripComment">
+        insert into itrip_comment(
+            hotelId,
+            productId,
+            orderId,
+            productType,
+            content,
+            userId,
+            isHavingImg,
+            positionScore,
+            facilitiesScore,
+            serviceScore,
+            hygieneScore,
+            score,
+            tripMode,
+            isOk,
+            creationDate,
+            createdBy,
+            modifyDate,
+            modifiedBy)
+        values(
+                  #{hotelId},
+                  #{productId},
+                  #{orderId},
+                  #{productType},
+                  #{content},
+                  #{userId},
+                  #{isHavingImg},
+                  #{positionScore},
+                  #{facilitiesScore},
+                  #{serviceScore},
+                  #{hygieneScore},
+                  #{score},
+                  #{tripMode},
+                  #{isOk},
+                  #{creationDate},
+                  #{createdBy},
+                  #{modifyDate},
+                  #{modifiedBy})
+    </insert>
+
+    <select id="gethotelscore" resultType="cn.kgc.itrip.beans.vo.comment.ItripScoreCommentVO">
+        SELECT
+        ROUND(AVG(positionScore),1) AS avgPositionScore,
+        ROUND(AVG(facilitiesScore),1) AS avgFacilitiesScore,
+        ROUND(AVG(serviceScore),1) AS avgServiceScore,
+        ROUND(AVG(hygieneScore),1) AS avgHygieneScore,
+        ROUND(AVG(score),1) AS avgScore
+        FROM itrip_comment
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="hotelId != null">
+                and hotelId=#{hotelId}
+            </if>
+        </trim>
+    </select>
+    <select id="getcount" resultType="cn.kgc.itrip.beans.vo.comment.ItripCountVo">
+        SELECT (select count(isOk) from itrip_comment where isOk = 0 and hotelId = #{hotelId})        as improve,
+               (select count(isOk) from itrip_comment where isOk = 1 and hotelId = #{hotelId})        as isok,
+               (select count(isOk) from itrip_comment where isHavingImg = 1 and hotelId = #{hotelId}) as havingimg,
+               count(*)                                                                               as allcomment
+        from itrip_comment
+        where hotelId = #{hotelId}
+    </select>
+    <select id="gethoteldesc" resultType="cn.kgc.itrip.beans.vo.comment.ItripHotelDescVO">
+        select id as hotelId, hotelLevel, hotelName
+        from itrip_hotel
+        where id = #{hotelId}
+    </select>
+    <select id="queryCommentCount" resultType="java.lang.Integer">
+        select count(id)
+        from itrip_comment
+        where hotelId = #{hotelId}
+        <if test="itripSearchCommentVO.isHavingImg == 1">
+            and isHavingImg = 1
+        </if>
+        <if test="itripSearchCommentVO.isOk == 0">
+            and isOk = 0
+        </if>
+        <if test="itripSearchCommentVO.isOk == 1">
+            and isOk = 1
+        </if>
+    </select>
+    <select id="queryitripReturnCommentVo" resultType="cn.kgc.itrip.beans.vo.comment.ItripListCommentVO">
+        select ic.content,
+        ic.creationDate,
+        ic.id,
+        ic.isHavingImg,
+        ic.score,
+        ild.name as tripModeName
+        from itrip_comment ic,
+        itrip_label_dic ild
+        where ild.id = ic.tripMode
+        and ic.hotelId = #{hotelId}
+        <if test="itripSearchCommentVO.isHavingImg == 1">
+            and ic.isHavingImg = 1
+        </if>
+        <if test="itripSearchCommentVO.isOk == 0">
+            and isOk = 0
+        </if>
+        <if test="itripSearchCommentVO.isOk == 1">
+            and isOk = 1
+        </if>
+        limit #{beginPos},#{pageSize}
+    </select>
+    <select id="getCommentAvgScore" resultType="cn.kgc.itrip.beans.vo.comment.ItripScoreCommentVO">
+        SELECT
+        ROUND(AVG(positionScore),1) AS avgPositionScore,
+        ROUND(AVG(facilitiesScore),1) AS avgFacilitiesScore,
+        ROUND(AVG(serviceScore),1) AS avgServiceScore,
+        ROUND(AVG(hygieneScore),1) AS avgHygieneScore,
+        ROUND(AVG(score),1) AS avgScore
+        FROM itrip_comment
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="hotelId != null">
+                and hotelId=#{hotelId}
+            </if>
+        </trim>
+    </select>
+</mapper>

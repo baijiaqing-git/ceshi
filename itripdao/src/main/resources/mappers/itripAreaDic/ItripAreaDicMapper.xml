@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripAreaDic.ItripAreaDicMapper">
+
+
+    <select id="queryHotCity" resultType="cn.kgc.itrip.beans.model.ItripAreaDic">
+        select id,
+               name,
+               areaNo,
+               parent,
+               isActivated,
+               isTradingArea,
+               isHot,
+               level,
+               isChina,
+               pinyin,
+               creationDate,
+               createdBy,
+               modifyDate,
+               modifiedBy
+        from itrip_area_dic
+        where isHot = 1
+          and isChina = #{isChina}
+    </select>
+    <select id="queryTrading" resultType="cn.kgc.itrip.beans.vo.ItripTradeAreaVo">
+        select id,name
+        from itrip_area_dic where parent=#{cityId};
+    </select>
+</mapper>

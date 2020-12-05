@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripUserLinkUser.ItripUserLinkUserMapper">
+    <insert id="insertItripUserLinkUser">
+        insert into itrip_user_link_user(linkUserName,
+                                         linkIdCard,
+                                         linkPhone,
+                                         userId,
+                                         creationDate,
+                                         createdBy,
+                                         modifyDate,
+                                         modifiedBy,
+                                         linkIdCardType)
+        values (#{linkUserName},
+                #{linkIdCard},
+                #{linkPhone},
+                #{userId},
+                #{creationDate},
+                #{createdBy},
+                #{modifyDate},
+                #{modifiedBy},
+                #{linkIdCardType})
+    </insert>
+
+    <update id="updateItripUserLinkUser">
+        update itrip_user_link_user
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+            <if test="id != null and id!=''">
+                id=#{id},
+            </if>
+            <if test="linkUserName != null and linkUserName!=''">
+                linkUserName=#{linkUserName},
+            </if>
+            <if test="linkIdCard != null and linkIdCard!=''">
+                linkIdCard=#{linkIdCard},
+            </if>
+            <if test="linkPhone != null and linkPhone!=''">
+                linkPhone=#{linkPhone},
+            </if>
+            <if test="userId != null and userId!=''">
+                userId=#{userId},
+            </if>
+            <if test="creationDate != null and creationDate!=''">
+                creationDate=#{creationDate},
+            </if>
+            <if test="createdBy != null and createdBy!=''">
+                createdBy=#{createdBy},
+            </if>
+            <if test="modifyDate != null and modifyDate!=''">
+                modifyDate=#{modifyDate},
+            </if>
+            <if test="modifiedBy != null and modifiedBy!=''">
+                modifiedBy=#{modifiedBy},
+            </if>
+            <if test="linkIdCardType != null and linkIdCardType!=''">
+                linkIdCardType=#{linkIdCardType}
+            </if>
+        </trim>
+    </update>
+    <update id="modifyuserlinkuser">
+        select id, linkUserName, linkIdCard, linkPhone, userId, creationDate, createdBy, modifyDate, modifiedBy, linkIdCardType
+        from itrip_user_link_user where userId=#{userId}
+    </update>
+    <delete id="deleteItripUserLinkUserByIds">
+        delete from itrip_user_link_user where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryLinkUserById" resultType="cn.kgc.itrip.beans.model.ItripUserLinkUser">
+        select id,
+               linkUserName,
+               linkIdCard,
+               linkPhone,
+               userId,
+               creationDate,
+               createdBy,
+               modifyDate,
+               modifiedBy,
+               linkIdCardType
+        from itrip_user_link_user
+        where userId=#{userId}
+    </select>
+</mapper>

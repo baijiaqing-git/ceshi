@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripLabelDic.ItripLabelDicMapper">
+
+
+    <select id="getHotelFeature" resultType="cn.kgc.itrip.beans.model.ItripHotelFeature">
+        select id, name, description, pic
+        from itrip_label_dic
+        where parentId = 16
+    </select>
+    <select id="queryhotelroombed" resultType="cn.kgc.itrip.beans.vo.hotelroom.SearchHotelroombedVo">
+        select description,id,name,pic from itrip_label_dic where parentId=1
+    </select>
+    <select id="gettraveltype" resultType="cn.kgc.itrip.beans.vo.ItripTravelTypeVo">
+        select description,id,`name`,pic from itrip_label_dic where parentId=107
+    </select>
+</mapper>

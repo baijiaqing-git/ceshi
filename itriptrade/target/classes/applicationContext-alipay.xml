@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="cn.kgc.itrip.trade.config.AlipayConfig" id="alipayConfig">
+        <property name="signType" value="RSA2"/>
+        <property name="returnUrl" value="http://localhost:8080/trade/api/return"/>
+        <property name="notifyUrl" value="http://bjqapp.natapp1.cc/trade/api/notify"/>
+        <property name="charset" value="UTF-8"/>
+        <property name="url" value="https://openapi.alipaydev.com/gateway.do"/>
+        <property name="alipayPublicKey"
+                  value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqpDJ7SMsDJJerwKmo96dYO1We2H32luxy8KKfQrj6aFuefrDJvpgeJJ5HoPhMxkIq6/1Fi0+jbITc6OvEbqToiXiu5+mEXaM1AbXzq0eJd90qv7Z+phI6WT7/ZQnO1BdOQwwP1/0uYRRlYVACtEHMvXoIzYMLXIMqn2+PAnsXPYuQ56l+s6SGYPJBQz/3yoSR90oBfWQV/eAA86h/yJgZR6BHYQ1qFcvR3H1/e8FNHFwsNKMp6NU7MMTqa2kI+AjhnCJshEJgBf2bVD0PLM61T6kzZ7BQt1S9kP8HLgOqNggaKMlqsOOBcf2ILvxZJ23AIyft9k+5/uqz9IcRKF5RwIDAQAB"/>
+        <property name="rsaPrivateKey"
+                  value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCqkMntIywMkl6vAqaj3p1g7VZ7YffaW7HLwop9CuPpoW55+sMm+mB4knkeg+EzGQirr/UWLT6NshNzo68RupOiJeK7n6YRdozUBtfOrR4l33Sq/tn6mEjpZPv9lCc7UF05DDA/X/S5hFGVhUAK0Qcy9egjNgwtcgyqfb48Cexc9i5DnqX6zpIZg8kFDP/fKhJH3SgF9ZBX94ADzqH/ImBlHoEdhDWoVy9HcfX97wU0cXCw0oyno1TswxOpraQj4COGcImyEQmAF/ZtUPQ8szrVPqTNnsFC3VL2Q/wcuA6o2CBooyWqw44Fx/Ygu/FknbcAjJ+32T7n+6rP0hxEoXlHAgMBAAECggEAN1C5i+RqNrGJb2yGqoJZu8N81orRHMm8AX7X9vF/NJecAocmnw94FeI60YCnmjC2NSfdbhHCRaXI1Snybud5VY6/12VRMDyoM2L8vhQ6wMGVTpdUDgcxLjAH4RcZGg1YDlY7l3IBJeEZrEoImPltQkOpwzGWBW8FWI1rEoGNXCAawOuMY0LKBwX2nAZ36k+eLwN+Ccz91PRVIkgKGdb3bweTKwLLoi57dWP/+ujJMiITVowk05hdVZmEtdhgLhFMxnjWxpdca64jKdSG8BKoZNtbhwsd/LF5zD3Rv/LkmJaSVKJjS8lTleW8nsZde29vwjXy2dz01/vfQZthu0DmwQKBgQDgnqmmrpwkUMC1roFXH/ZCvRiqYzTOWwCzt0b3euHVEcmeJzp2EWIHaqtvtQ6e36mvUuDV8oia9tUQazLTnnhQBlB8d9y+RRfSiZPij1DCGA4lHy8KnewQsPm7gBYe1gqTQrM6pZp/l6S/4ode7vQ+DE2uGOhCClpCOtg0jRpwsQKBgQDCZOxbgLjhoh9X0ywMXzwwHA5DtXVKHnh+y5zJvPhhbwvqtjv8SJ3ugbMFAk8XELxqXzoomytu8jWs6iczBKEBM4A58coSGf24mFFa81h+MGm09nTbMMPLwNmiOcLcV1qVtaWgaaFqXYxIz1VOh4aBDWxKrqyWw0STkGQ4bvZHdwKBgHswqWzAIOSN4VMDNO56mg36NZflNuXh5R2ra+F45Hh9++ygKSDt4aydpQ5r52vc0OxV8PeFv8P1kd8iW8rSA7wn6maJOmij7i/Kwm+kGC+LD97uHledSwXQefaKhhc9XqlrEG8eugA2Q+X1MDcxqISLLONJx7/Ie74NFdykcpbRAoGBALNXRK+ObALN/TibO/IWEoMX/xj8Wb8NqYDg/D8qNcQ+HLJneaPgosOdqLkgTjMrX4iLXi6EKWfr0RU72Po6dQeUqeHLbe+RRwB8leHgy21v4LXxAhIORTS/MIl33IxHkuy3bpw1l5N3xqqNjVgrtC1vYs7ro5Jbh/LTrYJa7J81AoGAHzEC335KTt9QQM00UjEXx5+BPstFVkgy3aF6QrOPGpZbsCpnPRgYg5KNVxfEtvLdd5KQSb3amVs1oPKJhgsKa73K9J9d6AkV5o3W1jpmO5S0EhJF348BsrNftRk1QA1gdPc/m8fssxv1QdqmWftyC0v+rJ6SV6ehpFKnuPgspSc="/>
+        <property name="format" value="json"/>
+        <property name="appID" value="2016102400748561"/>
+        <property name="paymentSuccessUrl"
+                  value="http://localhost:8080/index.html#/orderpaystate?orderNo=%s&amp;id=%s"/>
+        <property name="paymentFailureUrl"
+                  value="http://localhost:8080/index.html#/orderpaystate?orderNo=%s&amp;id=%s&amp;state=0"/>
+    </bean>
+
+</beans>

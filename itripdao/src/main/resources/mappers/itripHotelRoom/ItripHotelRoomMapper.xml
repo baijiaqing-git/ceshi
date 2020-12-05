@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripHotelRoom.ItripHotelRoomMapper">
+
+
+    <select id="queryroombed" resultType="cn.kgc.itrip.beans.vo.hotelroom.ItripHotelRoomVO">
+        select id,
+        hotelId,
+        roomTitle,
+        roomPrice,
+        roomBedTypeId,
+        isHavingBreakfast,
+        payType,
+        satisfaction,
+        isBook,
+        isCancel,
+        isTimelyResponse
+        from itrip_hotel_room
+        <where>
+            and hotelId=#{hotelId}
+            <if test="isBook != null">
+                and  isBook=#{isBook}
+            </if>
+            <if test="isHavingBreakfast != null">
+                and isHavingBreakfast=#{isHavingBreakfast}
+            </if>
+            <if test="isTimelyResponse != null">
+                and  isTimelyResponse=#{isTimelyResponse}
+            </if>
+            <if test="roomBedTypeId != null">
+                and  roomBedTypeId=#{roomBedTypeId}
+            </if>
+            <if test="isCancel != null">
+                and  isCancel=#{isCancel}
+            </if>
+            <if test="payType != null and payType ==1">
+                and  payType in (1,3)
+            </if>
+            <if test="payType != null and payType ==2">
+                and  payType in (2,3)
+            </if>
+            <if test="payType != null and payType ==3">
+                and  payType=3
+            </if>
+            <if test="originalRoomList != null">
+                and
+                <foreach collection="originalRoomList" open="(" close=")" separator="AND" item="item">
+                    (
+                    (
+                    select store from itrip_hotel_temp_store where
+                    itrip_hotel_temp_store.roomid=itrip_hotel_room.id and
+                    DATE_FORMAT(recordDate,'%Y-%m-%d') =date_format(#{item},'%Y-%m-%d')
+                    )is null or
+                    (
+                    select store from itrip_hotel_temp_store where
+                    itrip_hotel_temp_store.roomid=itrip_hotel_room.id and
+                    DATE_FORMAT(recordDate,'%Y-%m-%d') =date_format(#{item},'%Y-%m-%d')
+                    )>0
+                    )
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="getItripHotelRoomById" resultType="cn.kgc.itrip.beans.model.ItripHotelRoom">
+        select
+        id as id,
+        hotelId as hotelId,
+        roomTitle as roomTitle,
+        roomPrice as roomPrice,
+        roomBedTypeId as roomBedTypeId,
+        isHavingBreakfast as isHavingBreakfast,
+        payType as payType,
+        satisfaction as satisfaction,
+        isBook as isBook,
+        isCancel as isCancel,
+        isTimelyResponse as isTimelyResponse,
+        creationDate as creationDate,
+        createdBy as createdBy,
+        modifyDate as modifyDate,
+        modifiedBy as modifiedBy
+        from itrip_hotel_room
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+</mapper>

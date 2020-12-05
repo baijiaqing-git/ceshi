@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripUser.ItripUserMapper">
+    <insert id="insertItripUser">
+        insert into itrip_user(userCode,
+                               userPassword,
+                               userType,
+                               flatID,
+                               userName,
+                               weChat,
+                               QQ,
+                               weibo,
+                               baidu,
+                               creationDate,
+                               createdBy,
+                               modifyDate,
+                               modifiedBy,
+                               activated)
+        values (#{userCode},
+                #{userPassword},
+                #{userType},
+                #{flatID},
+                #{userName},
+                #{weChat},
+                #{QQ},
+                #{weibo},
+                #{baidu},
+                now(),
+                #{createdBy},
+                #{modifyDate},
+                #{modifiedBy},
+                #{activated})
+    </insert>
+    <update id="updataUserFlatId">
+        update itrip_user
+        set flatID=#{userId}
+        where id = #{userId}
+    </update>
+    <update id="updateUserActive">
+        update itrip_user
+        set activated=1
+        where userCode = #{userCode}
+    </update>
+    <delete id="deleteUserByUserCode">
+        delete
+        from itrip_user
+        where id = #{id}
+    </delete>
+
+
+    <select id="queryUserCode" resultType="java.lang.Integer">
+        select count(id)
+        from itrip_user
+        where userCode = #{userCode}
+    </select>
+    <select id="queryUserByUserCodeAndUserPassword" resultType="cn.kgc.itrip.beans.model.ItripUser">
+        select id,
+               userCode,
+               userPassword,
+               userType,
+               flatID,
+               userName,
+               weChat,
+               QQ,
+               weibo,
+               baidu,
+               creationDate,
+               createdBy,
+               modifyDate,
+               modifiedBy,
+               activated
+        from itrip_user
+        where userCode = #{userCode}
+          and userPassword = #{password}
+    </select>
+    <select id="queryUserByUserCode" resultType="cn.kgc.itrip.beans.model.ItripUser">
+        select activated
+        from itrip_user
+        where userCode = #{userCode}
+    </select>
+</mapper>

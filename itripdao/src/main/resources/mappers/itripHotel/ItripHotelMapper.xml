@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.itrip.dao.mapper.itripHotel.ItripHotelMapper">
+    <select id="itripSearchDetailsHotelVOs" resultType="cn.kgc.itrip.beans.vo.hotel.ItripSearchDetailsHotelVO">
+        select itrip_label_dic.`name`,
+               itrip_label_dic.description
+        from itrip_hotel,
+             itrip_hotel_feature,
+             itrip_label_dic
+        where itrip_hotel.id = itrip_hotel_feature.hotelId
+          and itrip_hotel_feature.featureId = itrip_label_dic.id
+          and itrip_hotel.id = #{id}
+    </select>
+    <select id="itripSearchDetailsHotelVO" resultType="java.lang.String">
+        select details
+        from itrip_hotel
+        where id = #{id}
+    </select>
+
+
+    <select id="queryhotelfacilities" resultType="java.lang.String">
+        select facilities
+        from itrip_hotel
+        where id = #{id}
+    </select>
+    <select id="queryhotelpolicy" resultType="java.lang.String">
+        select hotelPolicy
+        from itrip_hotel
+        where id = #{id}
+    </select>
+    <select id="getHotelFeatureList" resultType="java.lang.String">
+        SELECT c.`name` as hotelFeatureList
+        FROM itrip_label_dic c
+        WHERE c.id In (SELECT featureId from itrip_hotel_feature where hotelId = #{id})
+    </select>
+    <select id="getHotelName" resultType="java.lang.String">
+        SELECT l.hotelName as hotelName
+        FROM itrip_hotel l
+        where l.id = #{id}
+    </select>
+    <select id="getTradingAreaNameList" resultType="java.lang.String">
+        SELECT c.`name` as tradingAreaNameList
+        FROM itrip_area_dic c
+        where c.id IN
+              (select e.areaId from itrip_hotel_trading_area e where e.hotelId = #{id})
+    </select>
+    <select id="getItripHotelById" resultType="cn.kgc.itrip.beans.model.ItripHotel">
+        select
+        id as id,
+        hotelName as hotelName,
+        countryId as countryId,
+        provinceId as provinceId,
+        cityId as cityId,
+        address as address,
+        details as details,
+        facilities as facilities,
+        hotelPolicy as hotelPolicy,
+        hotelType as hotelType,
+        hotelLevel as hotelLevel,
+        isGroupPurchase as isGroupPurchase,
+        redundantCityName as redundantCityName,
+        redundantProvinceName as redundantProvinceName,
+        redundantCountryName as redundantCountryName,
+        redundantHotelStore as redundantHotelStore,
+        creationDate as creationDate,
+        createdBy as createdBy,
+        modifyDate as modifyDate,
+        modifiedBy as modifiedBy
+        from itrip_hotel
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+</mapper>
